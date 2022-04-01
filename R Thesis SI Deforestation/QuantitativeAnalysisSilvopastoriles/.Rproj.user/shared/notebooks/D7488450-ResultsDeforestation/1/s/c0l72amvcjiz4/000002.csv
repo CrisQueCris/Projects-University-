@@ -1,0 +1,1 @@
+"0","select(filter(si.df, mhlnbs>outlier), c(1,8, 32,36,37, 45)) #select only id_house, SPS, stocking_rate, labourperhectare, milkperhectare, mhlnbs "

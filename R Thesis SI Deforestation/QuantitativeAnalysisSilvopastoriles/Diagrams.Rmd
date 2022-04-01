@@ -1,0 +1,44 @@
+---
+title: "Describing Dataset"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+load("Dataframes/si.df.rda")
+```
+
+```{r}
+summary(filter(si.df, SPS))
+```
+```{r}
+ggplot(data = filter(intensification.na.omit.df, stocking_rate<=10))+
+  geom_point(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+  #geom_smooth(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+
+```
+```{r}
+ggplot(data = filter(intensification.na.omit.df, stocking_rate<=10))+
+  geom_point(mapping = aes(x=distance, y=forest_reserves, color=SPS))
+  #geom_smooth(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+
+```
+```{r}
+ggplot(data = filter(intensification.na.omit.df))+
+  geom_point(mapping = aes(x=labourperhectare, y=forest_reserves, color=SPS))
+  #geom_smooth(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+
+```
+```{r}
+ggplot(data = filter(intensification.na.omit.df))+
+  geom_point(mapping = aes(x=milkperhectare, y=forest_reserves, color=SPS))
+  #geom_smooth(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+
+```
+```{r}
+ggplot(data = filter(intensification.na.omit.df))+
+  geom_point(mapping = aes(x=pfp, y=forest_reserves, color=SPS))
+  #geom_smooth(mapping = aes(x=stocking_rate, y=forest_reserves, color=SPS))
+
+```

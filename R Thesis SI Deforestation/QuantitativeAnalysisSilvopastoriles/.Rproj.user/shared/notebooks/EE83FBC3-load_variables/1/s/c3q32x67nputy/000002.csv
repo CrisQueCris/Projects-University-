@@ -1,0 +1,12 @@
+"0","setwd(""C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final/"")"
+"2","The working directory was changed to C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","modulo_n6 <- read.dta13(""N_Ganaderia/Submodulos_long/N6_Productos_lacteos_long.dta"")"
+"2","
+  N11_7_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N11_9_2_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"0","modulo_n6"

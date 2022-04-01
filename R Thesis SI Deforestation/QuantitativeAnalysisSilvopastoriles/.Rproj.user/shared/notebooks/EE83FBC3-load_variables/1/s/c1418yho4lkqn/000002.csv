@@ -1,0 +1,2 @@
+"0","forest.df <- select(si.df, id_house, area_forest)"
+"0","save(forest.df, file = ""forest.df.rda"")"

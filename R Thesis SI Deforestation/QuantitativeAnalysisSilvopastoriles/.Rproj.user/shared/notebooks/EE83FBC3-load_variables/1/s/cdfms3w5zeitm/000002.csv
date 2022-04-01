@@ -1,0 +1,4 @@
+"0","setwd(""C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final/"")"
+"2","The working directory was changed to C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","modulo_n7 <- read.dta13(""N_Ganaderia/Submodulos_long/N7_Mano_de_obra_long.dta"")"
+"0","modulo_n7"

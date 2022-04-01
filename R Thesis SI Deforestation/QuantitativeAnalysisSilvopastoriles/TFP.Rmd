@@ -1,0 +1,38 @@
+---
+title: "Total Factor Productivity"
+output: html_notebook
+---
+
+Defining Total Factor Productivity as Milk yield per annual labour hour and animal units
+
+```{r}
+load("Dataframes/si.mhlnbsoutl.rda")
+library(psych)
+```
+
+
+
+Point clouds and correlations
+```{r}
+model.var <- c(12,4,13:15, 19, 18,11) # forest_reserves,stocking rate, milkperhectare, labourperhectare, pfplabour, pfplivestock, tfp, distance,  
+pairs.panels(si.mhlnbsoutl[,model.var],
+             gap=0,
+             bg=c("red","blue")[trainingout$SPS],
+             pch = 21)
+```
+T-test of TFP and SPS
+```{r}
+t.test(x=si.mhlnbsoutl$tfp[si.mhlnbsoutl$SPS==FALSE],
+       y=si.mhlnbsoutl$tfp[si.mhlnbsoutl$SPS==TRUE])
+ggplot(data = si.mhlnbsoutl, mapping=aes(y=tfp, x=SPS))+
+  geom_boxplot()
+```
+
+
+
+Multiple linear regression model of TFP, forest_reserves, SPS and distance
+```{r}
+fr_tfp_sps_distance <- lm(forest_reserves~tfp+SPS+distance, data=si.mhlnbsoutl)
+summary(fr_tfp_sps_distance)
+```
+

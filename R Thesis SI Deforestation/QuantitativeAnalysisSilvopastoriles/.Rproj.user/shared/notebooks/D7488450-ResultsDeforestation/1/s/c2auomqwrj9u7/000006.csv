@@ -1,0 +1,5 @@
+"0","model.var <- c(12,32, 36, 37, 14) # forest_reserves,stocking rate, milkperhectare, labourperhectare, distance"
+"0","pairs.panels(si.df[,model.var],"
+"0","             gap=0,"
+"0","             bg=c(""red"")[si.df$SPS],"
+"0","             pch = 21)"

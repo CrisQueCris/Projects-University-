@@ -1,0 +1,8 @@
+"0","labs <- c(""FALSE""=""SPS=FALSE"", ""TRUE""=""SPS=TRUE"")"
+"0","par(mfrow=c(3,1))"
+"0","ggplot(data = si.df, mapping = aes(x=mhlnbs, y= milkperhectare))+"
+"0","  geom_point(color=""blue"")+"
+"0","  geom_vline(xintercept = outlier)+"
+"0","  facet_wrap(~SPS, dir = ""v"", labeller = labeller(SPS=labs))+"
+"0","   coord_flip()+"
+"0","  geom_text(aes(x=mhlnbs, y= milkperhectare, label=ifelse(mhlnbs>7,as.character(id_house),'')),hjust=0,vjust=0)"

@@ -1,0 +1,150 @@
+---
+title: "SQ2"
+output:
+  word_document: default
+  html_notebook: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+## Results of SQ2: Do farmers with more intensive systems have relatively more forest reserves?
+
+### Loading R packages and dataframe 
+```{r, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(psych)
+library(heplots)
+load("Dataframes/si.df.rda")
+```
+
+### Scatterplots, histograms and correlations of forest reserves, stocking rates, annual milk yields per hectare, annual labour days per hectare and distances to highway
+```{r}
+model.var <- c(12,32, 36, 37, 14) # forest_reserves,stocking rate, milkperhectare, labourperhectare, distance
+pairs.panels(si.df[,model.var],
+             gap=0,
+             bg=c("red")[si.df$SPS],
+             pch = 21)
+```
+
+### Log-transformation of forest reserves
+```{r}
+si.df$forest_reserves.log <- log(si.df$forest_reserves+0.01) ## +0.01 to avoid infinitifs 
+```
+
+### Scatterplots, histograms and correlations of log-forest reserves, log-stocking rates, log-annual milk yields per hectare, log-annual labour days per hectare and distances to highway
+```{r}
+log.var <- c(44,41:43,14) # forest_reserves.log,stocking_rate.log , milkperhectare.log, labourperhectare.log, distance
+pairs.panels(si.df[,log.var],
+             gap=0,
+             bg=c("red", "green")[si.df$SPS],
+             pch = 21)
+```
+
+
+### Calculating Mahalanobis distance of log-stocking rates, log-milk yields and log-labour days 
+```{r}
+si.df<-si.df[!is.na(si.df$forest_reserves.log),] # remove NA in forest_reserves.log
+si.mhlnbs_outl <- mahalanobis(si.df[,c(41:43)],colMeans(si.df[,c(41:43)]),cov(si.df[,c(41:43)]))
+# Calculated Mahalanobis distances
+si.df$mhlnbs <- round(si.mhlnbs_outl,3) #Add to dataframe
+```
+
+###Q-Q plot of Mahalanobis distance and theoretic Chi-square quantiles
+```{r}
+qqPlot(si.df$mhlnbs, distribution = "chisq", df=3, envelope = FALSE, id=FALSE)
+```
+
+### Outlier definition as logic variable in dataframe
+```{r}
+outlier <- 5.5
+si.df$outlier_mhlnbs <- ifelse(si.df$mhlnbs > outlier, TRUE, FALSE)
+summary(si.df$outlier_mhlnbs)
+```
+
+### Key variables of identified outliers 
+```{r, echo=FALSE}
+select(filter(si.df, mhlnbs>outlier), c(1,8, 32,36,37, 45)) #select only id_house, SPS, stocking_rate, labourperhectare, milkperhectare, mhlnbs 
+``` 
+
+### Scatterplots of Mahalanobis distance and milk yields, labour days and stocking rates
+```{r}
+labs <- c("FALSE"="SPS=FALSE", "TRUE"="SPS=TRUE")
+par(mfrow=c(3,1))
+ggplot(data = si.df, mapping = aes(x=mhlnbs, y= milkperhectare))+
+  geom_point(color="blue")+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v", labeller = labeller(SPS=labs))+
+   coord_flip()+
+  geom_text(aes(x=mhlnbs, y= milkperhectare, label=ifelse(mhlnbs>7,as.character(id_house),'')),hjust=0,vjust=0)
+
+ggplot(data = si.df,mapping = aes(x=mhlnbs, y= labourperhectare))+
+  geom_point( color="blue")+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v", labeller = labeller(SPS=labs))+
+  coord_flip()+
+  geom_text(aes(x=mhlnbs, y= labourperhectare, label=ifelse(mhlnbs>7,as.character(id_house),'')),hjust=0,vjust=0)
+
+ggplot(data = si.df,mapping = aes(x=mhlnbs, y= stocking_rate))+
+  geom_point( color="blue")+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v", labeller = labeller(SPS=labs))+
+  coord_flip()+
+  geom_text(aes(x=mhlnbs, y= stocking_rate, label=ifelse(mhlnbs>7,as.character(id_house),'')),hjust=0,vjust=0)
+
+```
+
+### Removing outliers from dataframe
+```{r}
+si.df <- filter(si.df, outlier_mhlnbs==FALSE)
+```
+
+### Multiple linear regression model, dependent variable: log-forest reserves, independent variables: log-stocking-rates, log-milk yields, log-labour days, SPS, distance to highway
+```{r}
+fr_multi_reg <- lm(forest_reserves.log ~ stocking_rate.log+milkperhectare.log+labourperhectare.log+SPS+distance, data = si.df)
+summary(fr_multi_reg)
+```
+### Q-Q plot of errorterms and theoretical quantiles
+```{r}
+qqPlot(fr_multi_reg)
+```
+
+### Variable selection by comparing AIC
+```{r}
+step(fr_multi_reg)
+```
+
+### AIC-optimized model, independent variables: SPS, distance to highway
+```{r}
+fr_sps_distance_reg <- lm(forest_reserves.log ~ SPS + distance, data = si.df)
+summary(fr_sps_distance_reg)
+```
+
+### Leaving out single observations to see reflection on estimators
+```{r}
+head(dfbeta(fr_sps_distance_reg), n=10L)
+```
+
+### Q-Q plot of errorterms of AIC optimized linear model and theoretical quantiles
+```{r}
+qqPlot(fr_sps_distance_reg)
+```
+
+### Boxplots of log-forest reserves of farmers without and with SPS
+```{r}
+ggplot(data = si.df, mapping=aes(y=forest_reserves.log, x=SPS))+
+  geom_boxplot()
+```
+
+### One-sided t-test of mean log-forest reserves of farmers without and with SPS  
+```{r}
+fr_ttest <- t.test(x=si.df$forest_reserves.log[si.df$SPS==FALSE],
+       y=si.df$forest_reserves.log[si.df$SPS==TRUE], alternative = "greater"
+       )
+fr_ttest
+```
+
+### Transformation of means back to level values
+```{r}
+exp(fr_ttest$estimate)-0.01
+```

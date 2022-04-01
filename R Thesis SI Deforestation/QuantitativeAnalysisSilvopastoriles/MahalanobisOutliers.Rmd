@@ -1,0 +1,82 @@
+---
+title: "Mahalanobis Outliers"
+output:
+  word_document: default
+  html_notebook: default
+---
+```{r echo = FALSE, results='hide'}
+library(tidyverse)
+library(ggplot2)
+load("Dataframes/si.df.rda")
+si.df <-  si.df[is.finite(si.df[,40]),] # Filter elements with TFP is INF
+si.df <- filter(si.df, au!="NA" , forest_reserves!="NA") # Filter elements where au and forest_reserves are NA
+summary(si.df)
+```
+## Removeing Outliers using the Mahalanobis distance
+
+Find Outliers using Mahalanobis distance of "distance" ,"stocking_rate", "forest_reserves", "labourperhectare", "milkperhectare", "tfp". Mahalanobis distance calculates the standard Euclidean distance of each point to the mean. It is unitless, scale-invariant and includes correlations (Wikipedia!! Scite correctly)
+
+```{r}
+df <- c(14,32,12,36,37,40) #"distance" ,"stocking_rate", "forest_reserves", "labourperhectare", "milkperhectare", "tfp"
+
+summary(si.df[df])
+si.mhlnbs_outl <- mahalanobis(si.df[,df],colMeans(si.df[,df]),cov(si.df[,df]))
+si.mhlnbs_outl # Calculated Mahalanobis distances
+```
+
+Add Mahalanobis distance to dataframe si.df
+```{r}
+si.df$mhlnbs <- round(si.mhlnbs_outl,3)
+summary(si.df$mhlnbs)
+#save(si.df, file = "Dataframes/si.df.rda")
+```
+
+Boxplot Statistics of Mahalanobis distance
+```{r}
+boxplot.stats(si.df$mhlnbs)
+boxplot(si.df$mhlnbs)
+```
+
+The boxplot identifies a Mahalanobis distance of bigger than 8.3 as outlier.
+
+
+Create binomial variable of Mahalanobis Outliers, level 8.3 is chosen
+```{r}
+outlier <- 8.3
+si.df$outlier_mhlnbs <- ifelse(si.df$mhlnbs > outlier, TRUE, FALSE)
+summary(si.df$outlier_mhlnbs)
+```
+
+12 outliers are identified
+
+Visualize Outliers - Point clouds, above are SPS=FALSE, below SPS=TRUE. y axis displays Mahalanobis distance, the horizontal line shows the 14 boundary. 
+```{r}
+ggplot(data = si.df)+
+  geom_point(mapping = aes(x=mhlnbs, y= milkperhectare, size=stocking_rate, alpha=forest_reserves))+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v")+
+   coord_flip()
+
+ggplot(data = si.df)+
+  geom_point(mapping = aes(x=mhlnbs, y= tfp, size=stocking_rate, alpha=forest_reserves))+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v")+
+   coord_flip()
+ggplot(data = si.df,mapping = aes(x=mhlnbs, y= labourperhectare, size=stocking_rate, alpha=forest_reserves ))+
+  geom_point()+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v")+
+  coord_flip()
+```
+
+Build subset without Mahalanobis Outliers
+```{r}
+si.mhlnbsoutl <- filter(si.df, outlier_mhlnbs==FALSE)
+save(si.mhlnbsoutl, file="Dataframes/si.mhlnbsoutl.rda" )
+```
+
+Boxplot Statistics of Mahalanobis distance
+```{r}
+boxplot.stats(si.mhlnbsoutl$mhlnbs)
+boxplot(si.mhlnbsoutl$mhlnbs)
+```

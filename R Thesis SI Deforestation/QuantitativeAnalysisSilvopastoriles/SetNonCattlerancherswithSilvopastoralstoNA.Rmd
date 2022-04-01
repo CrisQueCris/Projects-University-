@@ -1,0 +1,80 @@
+---
+title: "filtering_silvopastoral_farmers"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  word_document: default
+---
+
+
+
+*installing tidyverse*
+#Load farmers.df
+```{r}
+library(tidyverse)
+load("Dataframes/farmers.df.Rda")
+```
+
+###Filtering for Farmers that practice Silvopastorilfarming but don't have Cattle
+```{r}
+head(filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE))
+```
+
+Why do three Farmers say they have Silvopastoral Areas but don't say they practice Milk or Meatproduction?
+
+#Filter Farmers that have Silvopasture and not Livestockproduction. Only show Animal-columns
+```{r}
+head(filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE)[,20:26])
+```
+All three farmers have Cows, however for two of them we don't know whether they are in production. We can assert that all of them are also Livestock producers.
+```{r}
+filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE)[,"f1_area_pasture_wo_sps"]
+```
+All three have land in pasture.
+```{r}
+filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE)[,c("stocking_rate_total", "stocking_rate_pasture",  "stocking_rate_pasture_silvo")]
+
+```
+Because two of them have unknown values for Cows we don't know their Stocking Rate. Possible solution is to assume that NAs in COW are actually `r '0'` animals. 
+```{r}
+head(farmers.df[,20:26])
+```
+
+The value 0 doesn't exist. So we assume, that NA=0.  
+
+#Set NA <- 0 in animals.
+```{r}
+
+farmers.df.animals <- farmers.df[,20:26]
+farmers.df.animals[is.na(farmers.df.animals)] <- 0
+farmers.df[,20:26] <- farmers.df.animals
+```
+
+```{r}
+head(farmers.df[,20:26])
+```
+
+
+#Set TRUE for LIvestockproduction in Farmers with Silvopastorals
+```{r}
+filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE)[, c("id_house", "livestockproduction")] #<- TRUE
+```
+```{r}
+farmers.df[farmers.df$id_house == "E24", "livestockproduction"] <- TRUE
+farmers.df[farmers.df$id_house == "G28", "livestockproduction"] <- TRUE
+farmers.df[farmers.df$id_house == "I18", "livestockproduction"] <- TRUE
+```
+
+```{r}
+
+filter(farmers.df, silvopastoral ==TRUE, farmers.df$livestockproduction==FALSE)[, c("id_house", "livestockproduction")] #<- TRUE
+```
+All Silvopastoral farmers are now also livestockfarmers.
+
+```{r} 
+
+save(farmers.df, file = "Dataframes/farmers.df.Rda")
+
+```
+

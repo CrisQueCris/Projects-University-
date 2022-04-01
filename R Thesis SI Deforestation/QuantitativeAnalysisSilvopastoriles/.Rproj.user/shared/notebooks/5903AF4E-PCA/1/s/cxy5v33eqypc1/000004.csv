@@ -1,0 +1,3 @@
+"0","trg <- predict(pc, training)"
+"0","trg <- data.frame(trg, training[6])"
+"0","trg"

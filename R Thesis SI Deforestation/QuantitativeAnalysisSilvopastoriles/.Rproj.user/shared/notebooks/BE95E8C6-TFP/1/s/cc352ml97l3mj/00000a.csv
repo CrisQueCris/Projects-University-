@@ -1,0 +1,5 @@
+"0","model.var <- c(12,4,13:15, 19, 18,11) # forest_reserves,stocking rate, milkperhectare, labourperhectare, pfplabour, pfplivestock, tfp, distance,  "
+"0","pairs.panels(si.mhlnbsoutl[,model.var],"
+"0","             gap=0,"
+"0","             bg=c(""red"",""blue"")[trainingout$SPS],"
+"0","             pch = 21)"

@@ -1,0 +1,65 @@
+"0","#install.packages(""Rcpp"")"
+"0","#install.packages(""usethis"")"
+"0","#library(devtools)"
+"0","#install_local(""Library/ggbiplot-master.zip"", force=TRUE)"
+"0","#install_github(""vqv/ggbiplot"", force = TRUE)"
+"0","library(ggbiplot)"
+"2","Lade nötiges Paket: plyr
+"
+"2","------------------------------------------------------------------------------------------------------
+"
+"2","You have loaded plyr after dplyr - this is likely to cause problems.
+If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+library(plyr); library(dplyr)
+"
+"2","------------------------------------------------------------------------------------------------------
+"
+"2","
+Attache Paket: ‘plyr’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    arrange, count, desc, failwith, id, mutate, rename, summarise, summarize
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    compact
+
+"
+"2","Lade nötiges Paket: scales
+"
+"2","
+Attache Paket: ‘scales’
+
+"
+"2","The following objects are masked from ‘package:psych’:
+
+    alpha, rescale
+
+"
+"2","The following object is masked from ‘package:purrr’:
+
+    discard
+
+"
+"2","The following object is masked from ‘package:readr’:
+
+    col_factor
+
+"
+"2","Lade nötiges Paket: grid
+"
+"0","gbplot <- ggbiplot(pc,"
+"0","                   obs.scale = 1,"
+"0","                   var.scale= 1,"
+"0","                   groups=training$SPS,"
+"0","                   ellipse=TRUE,"
+"0","                   circle=TRUE,"
+"0","                   ellipse.prob=0.95)"
+"0","gbplot <- gbplot+"
+"0","  scale_color_discrete(name="" "")+"
+"0","  theme(legend.direction = ""horizontal"","
+"0","        legend.position=""top"")"
+"0","print(gbplot)"

@@ -1,0 +1,5 @@
+"0","save(modulo_h, file = ""modulo_h.rda"")"
+"0","id_house <-  modulo_h$ID_HOUSE"
+"0","activity <- modulo_h$H1  "
+"0","purpose <- modulo_h$H1_2"
+"0","productive_activities.df <- data.frame(id_house, activity, purpose) "

@@ -1,0 +1,29 @@
+---
+title: "Discriptive Analysis of Silvopastoral Farmers"
+author: "C Rendel"
+date: "6 2 2020"
+output: html_document
+---
+
+#Discriptive Analysis of Farmer's Dataframe
+
+##Number of Farmers that indicate they have cattle.
+```{r}
+sum(Farmers$Cattleranching)
+```
+##Number of Farmers, Silvopastoril Farmers and NAs. 
+The SAL-Database consists of `r dim(Farmers)[1]`. 
+```{r}
+sum(Farmers$Silvopastoril)
+```
+
+##Mean of Total Landsize
+```{r}
+mean(Farmers$Finca.1..Area.total.de.la.finca)
+```
+##Mean of Forestsize
+```{r}
+mean(Farmers$Finca.1..Área.en.bosque)
+```
+
+

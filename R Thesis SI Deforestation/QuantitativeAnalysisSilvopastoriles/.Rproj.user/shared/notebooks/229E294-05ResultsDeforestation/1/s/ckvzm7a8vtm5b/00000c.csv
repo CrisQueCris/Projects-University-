@@ -1,0 +1,6 @@
+"0",""
+"0","ggplot(data = si.df,mapping = aes(x=mhlnbs, y= labourperhectare, size=stocking_rate, alpha=forest_reserves ))+"
+"0","  geom_point()+"
+"0","  geom_vline(xintercept = outlier)+"
+"0","  facet_wrap(~SPS, dir = ""v"")+"
+"0","  coord_flip()"

@@ -1,0 +1,3 @@
+"0","ggplot(data = si.mhlnbsoutl)+"
+"0","  geom_point(mapping = aes(x=labourperhectare, y= stocking_rate, colour=SPS))"
+"0",""

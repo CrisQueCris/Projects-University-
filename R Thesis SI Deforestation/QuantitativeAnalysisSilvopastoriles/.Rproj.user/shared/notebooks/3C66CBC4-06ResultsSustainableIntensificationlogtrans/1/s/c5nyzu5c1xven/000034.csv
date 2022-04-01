@@ -1,0 +1,1 @@
+"0","qqnorm(si.df$stocking_rate.log[si.df$SPS==FALSE], ylim = c(-3,3))"

@@ -1,0 +1,2 @@
+"0","slbx <- lm(au^best.lam ~ area_total, data = si.df)"
+"0","plot(slbx)"

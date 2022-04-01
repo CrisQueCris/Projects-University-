@@ -1,0 +1,107 @@
+---
+title: "Sustainable Intensification"
+output:
+  word_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+## SQ1: Is farming with Silvopastoral Systems in Caquetá a from of Sustainable Intensification
+The following chapter compares the means of milk yield per hectare, stocking rate, labour hours per hectare and the total factor productivity of farmers with SPS and of farmers with only conventional pasture. 
+
+At first necessary libraries and the dataframe si.mhlnbsoutl are loaded. The structure of the dataframes is displayed below. Outliers have been removed using the Mahalanobis distance (see Annex).
+
+```{r, message=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+
+```{r}
+load("Dataframes/si.mhlnbsoutl.rda") # Load Dataframe
+```
+The data is filtered to only contain land_type hills and no NA in SPS
+```{r}
+si.mhlnbsoutl <- filter(si.mhlnbsoutl, land_type=="Lomerío (lomas, mesas y vallecitos" & SPS!="NA" )
+summary(si.mhlnbsoutl$land_type)
+summary(si.mhlnbsoutl$SPS)
+```
+The dataframe contains only farms with land_type hills ("Lomerío"). NA have been omitted.
+`r nrow(filter(si.mhlnbsoutl, SPS==FALSE))` farmers have only conventional pastures. `r nrow(filter(si.mhlnbsoutl, SPS==TRUE))` farmers have SPS. 
+
+Visualizing subset -  milk yield per hectare and tfp
+```{r, echo=FALSE}
+ggplot(data = si.mhlnbsoutl)+
+  geom_point(mapping = aes(x=milkperhectare, y= tfp, colour=SPS))
+```  
+
+Visualizing subset -  labour hours per hectare and stocking rate
+
+```{r, echo=FALSE} 
+ggplot(data = si.mhlnbsoutl)+
+  geom_point(mapping = aes(x=labourperhectare, y= stocking_rate, colour=SPS))
+
+```
+
+**Boxplot of  stocking rate of conventional and SPS farmers**
+
+```{r, echo=FALSE}
+ggplot(data=si.mhlnbsoutl)+
+  geom_boxplot(mapping = aes(y=stocking_rate, x=SPS))
+```
+
+**T-test comparing mean stocking rates of SPS and conventional farmers**
+
+```{r, echo=FALSE}
+t.test(
+  x=si.mhlnbsoutl$stocking_rate[si.mhlnbsoutl$SPS==FALSE],
+  y=si.mhlnbsoutl$stocking_rate[si.mhlnbsoutl$SPS==TRUE]  )
+```
+
+**Boxplot of  milk yield**
+
+```{r, echo=FALSE}
+ggplot(data=si.mhlnbsoutl)+
+  geom_boxplot(mapping = aes(y=milkperhectare, x=SPS))
+```
+
+**T-test comparing mean milk yield per hectare of SPS and conventional farmers**
+
+```{r, echo=FALSE}
+t.test(
+  x=si.mhlnbsoutl$milkperhectare[si.mhlnbsoutl$SPS==FALSE],
+  y=si.mhlnbsoutl$milkperhectare[si.mhlnbsoutl$SPS==TRUE]  )
+```
+
+**Boxplot of labour hours per hectare**
+
+```{r, echo=FALSE}
+ggplot(data=si.mhlnbsoutl)+
+  geom_boxplot(mapping = aes(y=labourperhectare, x=SPS))
+```
+
+**T-test comparing mean labour hours per hectare of SPS and conventional farmers**
+
+```{r, echo=FALSE}
+t.test(
+  x=si.mhlnbsoutl$labourperhectare[si.mhlnbsoutl$SPS==FALSE],
+  y=si.mhlnbsoutl$labourperhectare[si.mhlnbsoutl$SPS==TRUE]  )
+```
+
+**Boxplots of total factor productivity**
+
+```{r, echo=FALSE}
+ggplot(data=si.mhlnbsoutl)+
+  geom_boxplot(mapping = aes(y=tfp, x=SPS))
+```
+
+
+**T-test comparing mean TFP of SPS and conventional farmers**
+```{r, echo=FALSE}
+t.test(
+  x=si.mhlnbsoutl$tfp[si.mhlnbsoutl$SPS==FALSE & is.finite(si.mhlnbsoutl$tfp)],
+  y=si.mhlnbsoutl$tfp[si.mhlnbsoutl$SPS==TRUE & is.finite(si.mhlnbsoutl$tfp) ] )
+```
+
+In non of the chosen measures for intensity did the farmers with SPS have significantly higher or lower rates than the conventional farmers. 
+

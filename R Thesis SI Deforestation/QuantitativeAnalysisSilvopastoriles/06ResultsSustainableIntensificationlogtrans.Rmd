@@ -1,0 +1,204 @@
+---
+title: "Sustainable Intensification"
+output:
+  word_document: default
+  html_notebook: default
+  html_document:
+    df_print: paged
+---
+## SQ1: Is farming with Silvopastoral Systems in Caquetá a from of Sustainable Intensification?  
+
+```{r, message=FALSE}
+library(tidyverse) # loading R packages
+library(ggplot2)
+load("Dataframes/si.df.rda") # Load Dataframe
+si.df <- filter(si.df, land_type=="Lomerío (lomas, mesas y vallecitos" & SPS!="NA") # filtering data to only contain farms on landscape "hills" and missing responses for SPS
+```
+
+### Creating Scatterplotts
+```{r}
+ggplot(data = si.df)+
+  geom_point(mapping = aes(x=milkperhectare, y= distance, colour=SPS))
+ggplot(data = si.df)+
+  geom_point(mapping = aes(x=labourperhectare, y= stocking_rate, colour=SPS))
+```
+
+**Stocking rates**
+
+### Histograms and Q-Q plots for stocking rates of farmers without and with SPS 
+```{r}
+par(mfrow=c(2,2))
+hist(si.df$stocking_rate[si.df$SPS==FALSE],breaks = 60, main="farmers without SPS")
+qqnorm(si.df$stocking_rate[si.df$SPS==FALSE], ylim = c(0,6))
+qqline(si.df$stocking_rate[si.df$SPS==FALSE], ylim = c(0,6))
+hist(si.df$stocking_rate[si.df$SPS==TRUE],breaks = 15, main="farmers with SPS")
+qqnorm(si.df$stocking_rate[si.df$SPS==TRUE], ylim = c(0,6))
+qqline(si.df$stocking_rate[si.df$SPS==TRUE], ylim = c(0,6))
+```
+
+### Log-transformation of stocking rates
+```{r}
+si.df$stocking_rate.log <- log(si.df$stocking_rate)
+```
+
+### Histograms and Q-Q plots of log-stocking rates
+```{r}
+par(mfrow=c(2,2))
+hist(si.df$stocking_rate.log[si.df$SPS==FALSE], breaks = 60, main = "farmers without SPS")
+qqnorm(si.df$stocking_rate.log[si.df$SPS==FALSE], ylim = c(-3,3))
+qqline(si.df$stocking_rate.log[si.df$SPS==FALSE], ylim = c(-3,3))
+hist(si.df$stocking_rate.log[si.df$SPS==TRUE], breaks = 15, main="farmers with SPS")
+qqnorm(si.df$stocking_rate.log[si.df$SPS==TRUE], ylim = c(-3,3))
+qqline(si.df$stocking_rate.log[si.df$SPS==TRUE], ylim = c(-3,3))
+```
+
+### Boxplots of stocking rates of farmers without and with SPS
+```{r}
+ggplot(data=si.df)+
+  geom_boxplot(mapping = aes(y=stocking_rate.log, x=SPS))
+```
+
+### Two-sided t-test of means of log-stocking rates of farmers without and with SPS
+```{r}
+stock.t_test <- t.test(
+  x=si.df$stocking_rate.log [si.df$SPS==FALSE],
+  y=si.df$stocking_rate.log [si.df$SPS==TRUE])
+stock.t_test
+```
+
+### Transformation of means of log-stocking rates back to level
+```{r}
+exp(stock.t_test$estimate)
+```
+Conventional farmers have a mean stocking rate of `r exp(stock.t_test$estimate[1])`. SPS farmers have a mean stocking rate of `r exp(stock.t_test$estimate[2])`. Even though the mean stocking rates (geometric means) of SPS farmers are higher they don't differ significantly. The Null-hypotheses (both means are the same) can not be rejected.
+
+**Annual milk yield per hectare**
+
+### Histograms and Q-Q plots of milk yields of farmers without and with SPS
+```{r}
+par(mfrow=c(2,2))
+hist(si.df$milkperhectare[si.df$SPS==FALSE],breaks = 70, main="farmers without SPS")
+qqnorm(si.df$milkperhectare[si.df$SPS==FALSE], ylim = c(-0,2500))
+qqline(si.df$milkperhectare[si.df$SPS==FALSE], ylim = c(-0,2500))
+hist(si.df$milkperhectare[si.df$SPS==TRUE],breaks = 15, main="farmers with SPS")
+qqnorm(si.df$milkperhectare[si.df$SPS==TRUE], ylim = c(-0,2500))
+qqline(si.df$milkperhectare[si.df$SPS==TRUE], ylim = c(-0,2500))
+```
+
+### Log-transformation of milk yields
+```{r}
+si.df$milkperhectare.log <- log(si.df$milkperhectare)
+```
+
+### Histograms and Q-Q plots of log-milk yields
+```{r}
+par(mfrow=c(2,2))
+hist(si.df$milkperhectare.log[si.df$SPS==FALSE], breaks = 70, main = "farmers without SPS")
+qqnorm(si.df$milkperhectare.log[si.df$SPS==FALSE], ylim = c(4,8))
+qqline(si.df$milkperhectare.log[si.df$SPS==FALSE], ylim = c(4,8))
+hist(si.df$milkperhectare.log[si.df$SPS==TRUE], breaks = 15, main="farmers with SPS")
+qqnorm(si.df$milkperhectare.log[si.df$SPS==TRUE], ylim = c(4,8))
+qqline(si.df$milkperhectare.log[si.df$SPS==TRUE], ylim = c(4,8))
+```
+
+### Boxplots of  log milk yield
+```{r}
+ggplot(data=si.df)+
+  geom_boxplot(mapping = aes(y=milkperhectare.log, x=SPS))
+```
+
+### T-test comparing mean milk yields per hectare of farmers with and without SPS
+```{r}
+my.t_test <- t.test(
+  x=si.df$milkperhectare.log[si.df$SPS==FALSE],
+  y=si.df$milkperhectare.log[si.df$SPS==TRUE])
+my.t_test
+```
+
+### Transformation of means of log-milk yields back to level
+```{r}
+exp(my.t_test$estimate)
+```
+The two-sided t-test shows a higher annual mean milk yield per hectare for SPS farmers. However results are not significant as the Null-hypothesis cannot be rejected. 
+
+**Annual labour days per hectare**  
+
+### Histograms and Q-Q plot of labour days of farmers without and with SPS
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+hist(si.df$labourperhectare[si.df$SPS==FALSE],breaks = 83, main="farmers without SPS")
+qqnorm(si.df$labourperhectare[si.df$SPS==FALSE], ylim = c(-0,40))
+qqline(si.df$labourperhectare[si.df$SPS==FALSE], ylim = c(-0,40))
+hist(si.df$labourperhectare[si.df$SPS==TRUE],breaks = 83, main="farmers with SPS")
+qqnorm(si.df$labourperhectare[si.df$SPS==TRUE], ylim = c(-0,40))
+qqline(si.df$labourperhectare[si.df$SPS==TRUE], ylim = c(-0,40))
+```
+
+### Log-transformation of labour days
+```{r}
+si.df$labourperhectare.log <- log(si.df$labourperhectare+0.01)
+```
+
+### Histograms and Q-Q plots of log-labour days
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+hist(si.df$labourperhectare.log[si.df$SPS==FALSE], breaks = 70, main = "farmers without SPS")
+qqnorm(si.df$labourperhectare.log[si.df$SPS==FALSE], ylim = c(-4,4))
+qqline(si.df$labourperhectare.log[si.df$SPS==FALSE], ylim = c(-4,4))
+hist(si.df$labourperhectare.log[si.df$SPS==TRUE], breaks = 15, main="farmers with SPS")
+qqnorm(si.df$labourperhectare.log[si.df$SPS==TRUE], ylim = c(-4,4))
+qqline(si.df$labourperhectare.log[si.df$SPS==TRUE], ylim = c(-4,4))
+```
+
+### Boxplot of labour days
+```{r, echo=FALSE}
+ggplot(data=si.df)+
+  geom_boxplot(mapping = aes(y=labourperhectare.log, x=SPS))
+```
+
+### T-test comparing mean labour hours per hectare of farmers without and with SPS
+```{r}
+lh.t_test <- t.test(
+  x=si.df$labourperhectare.log[si.df$SPS==FALSE],
+  y=si.df$labourperhectare.log[si.df$SPS==TRUE])
+lh.t_test
+```
+
+### Transformation of means of log-labour days back to level
+```{r}
+exp(lh.t_test$estimate)-0.01
+```
+Mean annual labour days per hectare are slightly higher for SPS farmers than for conventional farmers. The difference however is not significantly high enough to reject the NUll-hypothesis of both means beeing equal.
+
+**Distance to highway**
+
+### Histograms and Q-Q plots of distance of farmers without and with SPS
+```{r}
+par(mfrow=c(2,2))
+hist(si.df$distance[si.df$SPS==FALSE],breaks = 70, main="farmers without SPS")
+qqnorm(si.df$distance[si.df$SPS==FALSE], ylim = c(-0,25000))
+qqline(si.df$distance[si.df$SPS==FALSE], ylim = c(-0,25000))
+hist(si.df$distance[si.df$SPS==TRUE],breaks = 15, main="farmers with SPS")
+qqnorm(si.df$distance[si.df$SPS==TRUE], ylim = c(-0,25000))
+qqline(si.df$distance[si.df$SPS==TRUE], ylim = c(-0,25000))
+```
+
+### Boxplots of distance
+```{r}
+ggplot(data=si.df)+
+  geom_boxplot(mapping = aes(y=distance, x=SPS))
+```
+
+### T-test comparing mean distance of farmers without and with SPS
+```{r}
+d.t_test <- t.test(
+  x=si.df$distance[si.df$SPS==FALSE],
+  y=si.df$distance[si.df$SPS==TRUE])
+d.t_test
+```
+The mean distance indicates that SPS farmers are located a little further from the highway. Again however the difference is not significant enough to reject the Null-hypothesis that both means are the same. 
+
+```{r, echo=FALSE}
+save(si.df, file = "Dataframes/si.df.rda")
+```
+

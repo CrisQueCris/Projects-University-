@@ -1,0 +1,1 @@
+"0","si.df$forest_reserves.log <- log(si.df$forest_reserves+0.01) ## +0.01 to avoid infinitifs "

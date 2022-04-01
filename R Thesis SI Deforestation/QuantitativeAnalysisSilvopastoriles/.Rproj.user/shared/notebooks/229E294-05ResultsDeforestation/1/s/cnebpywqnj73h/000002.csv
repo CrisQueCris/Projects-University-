@@ -1,0 +1,3 @@
+"0","si.df<-si.df[!is.na(si.df$forest_reserves.log),] # remove NA in forest_reserves.log"
+"0","si.mhlnbs_outl <- mahalanobis(si.df[,log.var],colMeans(si.df[,log.var]),cov(si.df[,log.var]))"
+"0","# Calculated Mahalanobis distances"

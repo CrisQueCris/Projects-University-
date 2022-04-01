@@ -1,0 +1,7 @@
+"0","milk_products.df <- data.frame(id_house=modulo_n6$ID_HOUSE)"
+"0","milk_products.df$sub_product <- modulo_n6$N11_1"
+"0","milk_products.df$activity_executed <- modulo_n6$N11_2"
+"0","milk_products.df$number_cows_in_production <- modulo_n6$N11_3"
+"0","milk_products.df$milking_technology <- modulo_n6$N11_5"
+"0","milk_products.df$annual_milk_production <- modulo_n6$N11_7"
+"0","milk_products.df"

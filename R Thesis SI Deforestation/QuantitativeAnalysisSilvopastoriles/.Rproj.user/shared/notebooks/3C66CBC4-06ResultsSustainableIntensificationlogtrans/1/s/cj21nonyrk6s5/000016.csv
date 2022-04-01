@@ -1,0 +1,1 @@
+"0","qqnorm(si.df$milkperhectare[si.df$SPS==TRUE], ylim = c(-0,2500))"

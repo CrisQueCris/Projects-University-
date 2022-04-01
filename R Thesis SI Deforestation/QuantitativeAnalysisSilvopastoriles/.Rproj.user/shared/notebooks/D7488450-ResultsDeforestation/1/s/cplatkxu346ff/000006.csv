@@ -1,0 +1,5 @@
+"0","log.var <- c(44,41:43,14) # forest_reserves.log,stocking_rate.log , milkperhectare.log, labourperhectare.log, distance"
+"0","pairs.panels(si.df[,log.var],"
+"0","             gap=0,"
+"0","             bg=c(""red"", ""green"")[si.df$SPS],"
+"0","             pch = 21)"

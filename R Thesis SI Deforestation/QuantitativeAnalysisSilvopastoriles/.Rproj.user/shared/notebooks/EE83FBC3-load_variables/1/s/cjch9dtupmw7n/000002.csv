@@ -1,0 +1,191 @@
+"0","setwd(""C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final/"")"
+"2","The working directory was changed to C:/Users/Lenovo/Dropbox/0_SALDatabase/QuantitativeAnalysisSilvopastoriles/db_final inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","modulo_n <- read.dta13(""N_Ganaderia/N_Ganaderia_wide.dta"")"
+"2","
+  N4_1_4:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+"
+"2","
+  N4_1_5:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+"
+"2","
+  N4_1_6:
+  Factor codes of type double or float detected - no labels assigned.
+  Set option nonint.factors to TRUE to assign labels anyway.
+"
+"2","
+  N10_2_2_3_1_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_2:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_2:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_3:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_3:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_4:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_4:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_5:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_5:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_6:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_6:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_7:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_7:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_8:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_8:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_9:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_9:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_11:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_11:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_12:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_12:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_13:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_13:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_14:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_14:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_15:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_15:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_16:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_16:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_17:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_17:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_18:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_18:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_19:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_19:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_1_20:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N10_2_2_3_2_20:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N11_7_1_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N11_9_2_1_1:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N11_9_6_1:
+  Missing factor labels - no labels assigned.
+  Set option generate.factors=T to generate labels."
+"2","
+  N11_7_1_2:
+  Duplicated factor levels detected - generating unique labels.
+"
+"2","
+  N11_9_2_1_2:
+  Duplicated factor levels detected - generating unique labels.
+"
+"0","modulo_n"

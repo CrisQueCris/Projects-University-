@@ -1,0 +1,13 @@
+"0","library(psych)"
+"2","
+Attache Paket: ‘psych’
+
+"
+"2","The following objects are masked from ‘package:ggplot2’:
+
+    %+%, alpha
+
+"
+"0","load(""Dataframes/si.df.rda"")"
+"0","load(""Dataframes/si.mhlnbsoutl.rda"")"
+"0","model.var <- c(4,11:15)"

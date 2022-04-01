@@ -1,0 +1,2 @@
+"0","par(mfrow=c(2,2))"
+"0","hist(si.df$milkperhectare[si.df$SPS==FALSE],breaks = 70, main=""farmers without SPS"")"

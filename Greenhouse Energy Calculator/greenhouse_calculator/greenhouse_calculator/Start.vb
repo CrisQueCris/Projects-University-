@@ -88,7 +88,7 @@ Public Class A_Form
     End Sub
 
     Private Sub B_Save_Inputs_Click(sender As Object, e As EventArgs) Handles B_Save_Inputs.Click
-        Dim sw As StreamWriter = New StreamWriter("C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\greenhouse_calculator\_Energy\settings.inf")
+        Dim sw As StreamWriter = New StreamWriter("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\settings.inf")
 
         'save geometry
         sw.WriteLine(TB_GHlength.Text)
@@ -145,7 +145,8 @@ Public Class A_Form
     End Sub
 
     Private Sub B_Load_Inputs_Click(sender As Object, e As EventArgs) Handles B_Load_Inputs.Click
-        Dim sw As StreamReader = New StreamReader("C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\greenhouse_calculator\_Energy\settings.inf", FileMode.Open)
+        Dim sw As StreamReader = New StreamReader("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\settings.inf",
+                                                  FileMode.Open)
 
 
         'read geometry

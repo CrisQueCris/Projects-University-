@@ -1,0 +1,4 @@
+"0","pairs.panels(training[,model.var],"
+"0","             gap=0,"
+"0","             bg=c(""red"",""green"")[training$SPS],"
+"0","             pch = 21)"

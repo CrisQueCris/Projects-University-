@@ -1,0 +1,168 @@
+---
+title: "SQ2"
+output:
+  word_document: default
+  html_notebook: default
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+###Results of SQ2: Do farmers with more intensive systems have relatively more forest reserves?
+This chapter models the effect of SPS, stocking rate, distance, milk yield per hectare, labour hours per hectare, total factor productivity and distance on forest reserves in a multiple linear regression.
+
+The necessary librariesand the dataframe si.df are loaded into Rstudio. The library "psych" is used to visualize the variables in a convenient way. It displays histograms, scatterplot and correlations of forest reserves, stocking rates, annual labour hours per hectare, milk yield per hectare and distance. 
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(psych)
+load("Dataframes/si.df.rda")
+
+model.var <- c(12,32, 36, 37, 14) # forest_reserves,stocking rate, milkperhectare, labourperhectare, distance
+pairs.panels(si.df[,model.var],
+             gap=0,
+             bg=c("red")[si.df$SPS],
+             pch = 21)
+```
+Forest reserves, stocking rates, annual milk yield and annual labour days per hectare are log transformed to reach more normally distributed variables. Forest reserves are transformed using log(x+00.1) to avoid infinitive values. The code is seen below. The other variables were already transformed for SQ1. Scatterplots and correlations are visualized thereafter.
+
+```{r, echo=FALSE}
+si.df$forest_reserves.log <- log(si.df$forest_reserves+0.01)
+
+#Scatterplot and correlations 
+log.var <- c(44,41:43,14) # forest_reserves.log,stocking_rate.log , milkperhectare.log, labourperhectare.log, distance
+pairs.panels(si.df[,log.var],
+             gap=0,
+             bg=c("red", "green")[si.df$SPS],
+             pch = 21)
+```
+
+
+**Removeing Outliers using the Mahalanobis distance**
+
+To detect and remove outliers the Mahalanobis distance is calculated. The Mahalanobis distance calculates the standard Euclidean distance of each point to the mean. It is unitless, scale-invariant and includes correlations (Wikipedia!! Scite correctly)
+
+```{r}
+si.df<-si.df[!is.na(si.df$forest_reserves.log),] # remove NA in forest_reserves.log
+si.mhlnbs_outl <- mahalanobis(si.df[,log.var],colMeans(si.df[,log.var]),cov(si.df[,log.var]))
+# Calculated Mahalanobis distances
+```
+
+The Mahalanobis distance is added to the dataframe si.df and a logical variable created. Outliers are defined as mhlnbs > 11 in accordance with the visualization thereafter. 
+
+```{r}
+si.df$mhlnbs <- round(si.mhlnbs_outl,3)
+summary(si.df$mhlnbs)
+outlier <- 11.0
+si.df$outlier_mhlnbs <- ifelse(si.df$mhlnbs > outlier, TRUE, FALSE)
+summary(si.df$outlier_mhlnbs)
+```
+
+The scatterplots show the Mahalanobis distance on the y axis. The horizontal line displays the boundary of mhlnbs = 11. The x axis show annual milk yield on the first and annual labour days on the second figure. Conventional farmers are displayed on the upper half and SPS farmers on the lower hald of each figure. Four outliers are indentified of which 3 are SPS farmers. The conventional farmer has a exeptionally high amount of annual labour days. Two SPS farmers have a high stocking rate. One of them has a very high milk yield per hectare and the other one very high forest reserves. Subsequently the outliers are removed from the dataframe.
+
+```{r, echo=FALSE}
+ggplot(data = si.df)+
+  geom_point(mapping = aes(x=mhlnbs, y= milkperhectare, size=stocking_rate, alpha=forest_reserves))+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v")+
+   coord_flip()
+
+ggplot(data = si.df,mapping = aes(x=mhlnbs, y= labourperhectare, size=stocking_rate, alpha=forest_reserves ))+
+  geom_point()+
+  geom_vline(xintercept = outlier)+
+  facet_wrap(~SPS, dir = "v")+
+  coord_flip()
+```
+
+```{r}
+si.df <- filter(si.df, outlier_mhlnbs==FALSE) #remove outliers from dataframe
+```
+
+
+
+Simple linear regression of stocking rate as independent and forest reserves as dependent variable
+```{r}
+fr_stock_reg <- lm(forest_reserves.log ~ stocking_rate.log, data = si.df)
+summary(fr_stock_reg)
+ggplot(data = si.df, aes(x = stocking_rate.log, y = forest_reserves.log)) + 
+  geom_point(mapping = aes(color=SPS)) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Regression of stocking rate as independent, SPS as dummy and forest reserves as dependent variable
+
+```{r}
+fr_sr_sps_reg <- lm(forest_reserves.log ~ stocking_rate.log+SPS, data = si.df)
+summary(fr_sr_sps_reg)
+ggplot(data = si.df, aes(x = stocking_rate.log, y = forest_reserves.log, color=SPS)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+
+Including Distance
+```{r}
+fr_sr_sps_distance_reg <- lm(forest_reserves.log ~ labourperhectare.log+stocking_rate.log+SPS+distance, data = si.df)
+summary(fr_sr_sps_distance_reg)
+```
+
+Simple linear regression of forest reserves and milk yield
+```{r}
+fr_my_reg <- lm(forest_reserves.log ~ milkperhectare.log, data = si.df)
+summary(fr_my_reg)
+
+ggplot(data = si.df, aes(x = milkperhectare.log, y = forest_reserves.log)) + 
+  geom_point(mapping = aes(color=SPS)) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+Inlcuding SPS as dummy
+```{r}
+fr_my_SPS_reg <- lm(forest_reserves.log ~ milkperhectare.log+SPS, data = si.df)
+summary(fr_my_SPS_reg)
+
+ggplot(data = si.df, aes(x = milkperhectare.log, y = forest_reserves.log, color=SPS)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+
+Regression of labour hours and forest reserves
+```{r}
+fr_lh_reg <- lm(forest_reserves.log ~ labourperhectare.log+SPS, data = si.df)
+summary(fr_lh_reg)
+
+ggplot(data = si.df, aes(x = labourperhectare.log, y = forest_reserves.log, color=SPS)) + 
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+Regression of milk yield, labour hours on forest reserves
+
+```{r}
+fr_my_lh_pfp_reg <- lm(forest_reserves.log ~ milkperhectare.log+labourperhectare.log+stocking_rate.log+SPS, data = si.df)
+summary(fr_my_lh_pfp_reg)
+```
+
+
+```{r}
+fr_d_reg <- lm(forest_reserves.log ~ distance, data = si.df)
+summary(fr_d_reg)
+```
+
+T-test of mean log forest reserves of SPS and conventional farmers
+```{r}
+#si.df <- si.df[is.finite(si.df$forest_reserves),] #remove non-finite values of forest_reserves
+fr_ttest <- t.test(x=si.df$forest_reserves.log[si.df$SPS==FALSE],
+       y=si.df$forest_reserves.log[si.df$SPS==TRUE]
+       )
+fr_ttest
+ggplot(data = si.df, mapping=aes(y=forest_reserves.log, x=SPS))+
+  geom_boxplot()
+
+exp(fr_ttest$estimate)-0.01
+```
+SPS farmers have significantly less forest reserves than conventional farmers
+
+Transfroming back into level results in geometric means.
+```{r}
+exp(fr_ttest$estimate)-0.1
+```

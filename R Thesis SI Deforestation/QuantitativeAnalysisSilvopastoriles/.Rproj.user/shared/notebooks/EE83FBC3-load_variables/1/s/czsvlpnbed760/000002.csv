@@ -1,0 +1,7 @@
+"0","modulo_h <- read.dta13(""db_final/H_Actividades_productivas_y_recursos_naturales/H1_Actividades_Productivas_long.dta"")"
+"2","File not found.
+"
+"0","save(modulo_h, file = ""db_final_r/modulo_h.rda"")"
+"2","kann komprimierte Datei 'db_final_r/modulo_h.rda' nicht öffnen. Grund evtl. 'No such file or directory'"
+"2","Fehler in gzfile(file, ""wb"") : kann Verbindung nicht Ã¶ffnen
+"

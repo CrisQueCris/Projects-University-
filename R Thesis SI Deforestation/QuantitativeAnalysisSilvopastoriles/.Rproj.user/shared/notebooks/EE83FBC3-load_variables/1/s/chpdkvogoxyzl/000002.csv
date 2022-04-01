@@ -1,0 +1,5 @@
+"0","prod_act_wider.df <- pivot_wider(SAL_survey$productive_activities.df,"
+"0","                                  id_cols=id_house,"
+"0","                                  names_from=activity,"
+"0","                                  values_from=purpose)"
+"0","SAL_survey$pro_act_wider.df <- prod_act_wider.df"

@@ -1,0 +1,4 @@
+"0","library(tidyverse) # loading R packages"
+"0","library(ggplot2)"
+"0","load(""Dataframes/si.df.rda"") # Load Dataframe"
+"0","si.df <- filter(si.df, land_type==""Lomerío (lomas, mesas y vallecitos"" & SPS!=""NA"") # filtering data to only contain farms on landscape ""hills"" and missing responses for SPS"

@@ -1,0 +1,18 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+Load Libraries
+```{r}
+library(tidyverse)
+```
+
+Load dataframe
+```{r}
+load("Dataframes/intensification.df.rda")
+```
+Remove Na and filter for landscape hills
+```{r}
+intensification.df <- 
+```
+

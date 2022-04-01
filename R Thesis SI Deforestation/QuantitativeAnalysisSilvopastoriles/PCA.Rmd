@@ -1,0 +1,110 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r}
+library(psych)
+load("Dataframes/si.df.rda")
+load("Dataframes/si.mhlnbsoutl.rda")
+model.var <- c(4,11:15)
+```
+
+Training data
+```{r}
+set.seed(111)
+ind <- sample(2,nrow(si.df),
+              replace = TRUE,
+              prob = c(0.8,0.2))
+training <- si.df[ind==1,]
+test <- si.df[ind==2,]
+
+ind2 <- sample(2,nrow(si.mhlnbsoutl),
+              replace = TRUE,
+              prob = c(0.8,0.2))
+trainingout <- si.mhlnbsoutl[ind2==1,]
+testout <- si.df[ind2==2,]
+
+
+```
+Scatterplot and correlations of Original and of Dataset without Mahalanobis Outliers
+```{r}
+pairs.panels(training[,model.var],
+             gap=0,
+             bg=c("red","green")[training$SPS],
+             pch = 21)
+pairs.panels(trainingout[,model.var],
+             gap=0,
+             bg=c("red","blue")[trainingout$SPS],
+             pch = 21)
+```
+Principle Component Analysis
+```{r}
+pc <- prcomp(training[,model.var],
+             center=TRUE,
+             scale.=TRUE)
+attributes(pc)
+pc$center
+print(pc)
+summary(pc)
+```
+Scatterplot of Principal Components
+```{r}
+pairs.panels(pc$x,
+             gap=0,
+             bg = c("red", "blue", "yellow")[training$SPS],
+             pch = 21)
+```
+Bi-plots
+```{r}
+#install.packages("Rcpp")
+#install.packages("usethis")
+#library(devtools)
+#install_local("Library/ggbiplot-master.zip", force=TRUE)
+#install_github("vqv/ggbiplot", force = TRUE)
+library(ggbiplot)
+gbplot <- ggbiplot(pc,
+                   obs.scale = 1,
+                   var.scale= 1,
+                   groups=training$SPS,
+                   ellipse=TRUE,
+                   circle=TRUE,
+                   ellipse.prob=0.95)
+gbplot <- gbplot+
+  scale_color_discrete(name=" ")+
+  theme(legend.direction = "horizontal",
+        legend.position="top")
+print(gbplot)
+trg <- predict(pc, training)
+trg <- data.frame(trg, training[6])
+trg
+tst <- predict(pc, test)
+tst <- data.frame(tst, test[6])
+tst
+```
+#Binomial Logistic regression with First Two PCs
+```{r}
+library(nnet)
+trg$SPS <- as.logical(trg$SPS)
+#trg$SPS <- relevel(trg$SPS, ref="TRUE")
+logitmodel <- glm(SPS~PC1+PC2, family = binomial("logit"), data = trg)
+summary(logitmodel)
+```
+Confusion Matrix & Misclassification Error - training
+```{r}
+p <- predict(logitmodel, trg, type = "response")
+tab <- table(p,trg$SPS)
+tab
+1-sum(diag(tab))/sum(tab) #missclassification error
+```
+Confusion Matrix & Misclassification Error - testing
+```{r}
+p <- predict(logitmodel, tst, type = "response")
+tab <- table(p,tst$SPS)
+tab
+1-sum(diag(tab))/sum(tab) #misslcasification error
+```

@@ -1,0 +1,92 @@
+---
+title: "Log Transformation"
+output: html_notebook
+---
+Load Dataframe
+```{r}
+load("Dataframes/si.df.rda")
+```
+
+Summary of si.df
+```{r}
+summary(si.df)
+```
+
+Historgrams of au and area_total
+
+```{r}
+apply(si.df[,2:3], 2, hist, breaks=100)
+```
+Au and area_total area skewed to the right
+
+Point cloud of AU and area_total
+```{r}
+library(ggplot2)
+ggplot(data=si.df)+
+  geom_point(mapping = aes(au, area_total))
+```
+
+Log transformation:
+```{r}
+si.df$au.log <- log(si.df$au)
+si.df$area_total.log <- log(si.df$area_total)
+```
+Histogram of Logs of AU and area_total
+```{r}
+apply(si.df[,41:42], 2, hist, breaks=100)
+```
+
+Results look much more normally distribuited. 
+
+Point cloud of AU.log and area_total.log
+```{r}
+library(ggplot2)
+ggplot(data=si.df)+
+  geom_point(mapping = aes(au.log, area_total.log))
+```
+Simple regression of AU and area_total
+```{r}
+sl <-(lm(au~area_total, data=si.df))
+plot(sl)
+plot(si.df$area_total, rstandard(sl))
+```
+With each hectare farmers add 0.2 au. Five hectares add one au.
+
+simple linear regression of au.log and area_total.log
+
+```{r}
+sllog <- lm(au.log~area_total.log, data = si.df)
+plot(sllog)
+plot(si.df$area_total.log, rstandard(sllog))
+```
+Model loses significance, R is much lower
+```{r}
+hist(sl$residuals)
+hist(sllog$residuals)
+```
+QQ Plots
+```{r}
+qqnorm(sl$residuals)
+qqline(sl$residuals)
+```
+
+QQ Plots log
+```{r}
+qqnorm(sllog$residuals)
+qqline(sllog$residuals)
+
+```
+Box Cox
+```{r}
+library(MASS)
+bx <- boxcox(sl)
+best.lam <- bx$x[which(bx$y==max(bx$y))]
+```
+Regression of lambda transformation
+```{r}
+slbx <- lm(au^best.lam ~ area_total, data = si.df)
+plot(slbx)
+summary(sl)
+summary(slbx)
+```
+

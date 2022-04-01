@@ -1,0 +1,34 @@
+---
+title: "FilteringSilvopastoralfarmers"
+output: html_notebook
+---
+
+
+
+*installing tidyverse*
+```{r}
+library(tidyverse)
+```
+
+###Filtering for Farmers that practice Silvopastorilfarming but don't have Cattle
+```{r}
+head(filter(Farmers, Silvopastoril =='yes', Farmers$Cattleranching=='False'))
+```
+
+Why do three Farmers say they have Silvopastoral Areas but don't say they practice Milk or Meatproduction?
+
+```{r}
+filter(Farmers, Silvopastoril =='yes', Farmers$Cattleranching=='False')[,23:29]
+```
+All three farmers have Cows, however for two of them we don't know whether they are in production. We can assert that all of them are also Cattleranchers.
+```{r}
+filter(Farmers, Silvopastoril =='yes', Farmers$Cattleranching=='False')[,9]
+```
+All three have land in pasture.
+```{r}
+filter(Farmers, Silvopastoril =='yes', Farmers$Cattleranching=='False')[,30:32]
+
+```
+Because two of them have unknown values for Cows we don't know their StockingRate. Possible solution is to assume that NAs in COW are actually `r '0'`animals. 
+
+

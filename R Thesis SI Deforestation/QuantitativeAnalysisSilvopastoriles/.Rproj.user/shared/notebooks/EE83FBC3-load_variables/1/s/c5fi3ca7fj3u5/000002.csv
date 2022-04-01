@@ -1,0 +1,3 @@
+"0","si.df <- merge(SAL_survey$finca.df, SAL_survey$livestock.df, by = ""id_house"")"
+"0","si.df <- merge(si.df, SAL_survey$pro_act_wider.df, by=""id_house"")"
+"0","si.df <- merge(si.df, SAL_survey$labo_wider.df, by=""id_house"")"

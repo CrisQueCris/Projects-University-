@@ -1,0 +1,49 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+  ---
+title: "Descriptive Analysis of Farmers in SAL-Database"
+output: html_notebook
+---
+
+
+```{r, message=FALSE}
+library(tidyverse)
+load("Dataframes/si.df.rda")
+```
+
+### Number of Farmers with livestock production on landscape "hills"
+```{r}
+nrow(si.df)
+```
+
+### Number of farmers without and with SPS
+```{r}
+NoSPS <- filter(si.df, SPS==FALSE)
+nrow(NoSPS) #Number of farmers without SPS
+SPS <- filter(si.df, SPS==TRUE)
+nrow(SPS) #Number of farmers with SPS
+nrow(SPS)/nrow(si.df) #percentage of farmers with SPS
+```
+
+### Summary of key-variables of total dataset
+```{r}
+x <- select(si.df, au, area_total, area_forest, area_pasture, area_sps, stocking_rate, forest_reserves, distance, total_family_work, total_contracted_work, labour, labourperhectare, milk_cows, milk_yield,  milkperhectare)
+summary(x)
+```
+
+### Summary of key-variables of farmers without SPS
+```{r}
+summary(select(NoSPS, au, area_total, area_forest, area_pasture, area_sps, stocking_rate, forest_reserves, distance, total_family_work, total_contracted_work, labour, labourperhectare, milk_cows, milk_yield,  milkperhectare))
+```
+
+### Summary of key-variables of farmers with SPS
+```{r}
+summary(select(SPS, au, area_total, area_forest, area_pasture, area_sps, stocking_rate, forest_reserves, distance, total_family_work, total_contracted_work, labour, labourperhectare, milk_cows, milk_yield,  milkperhectare))
+```
+
+
+
+
