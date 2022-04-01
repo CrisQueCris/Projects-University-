@@ -25,7 +25,7 @@ Public Class Database
         Try
             'load the material data from the material.par file
             'Dim fs As FileStream
-            Dim fs = New FileStream("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\material.csv", FileMode.Open)
+            Dim fs = New FileStream("\_Energy\material.csv", FileMode.Open)
             Dim sr = New StreamReader(fs)
 
             Dim linecounter = 0
@@ -65,7 +65,7 @@ Public Class Database
         Try
             'load the screen data from the screen.csv file
             'Dim fs As FileStream
-            Dim fs1 = New FileStream("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\screen.csv", FileMode.Open)
+            Dim fs1 = New FileStream("\_Energy\screen.csv", FileMode.Open)
             Dim sr1 = New StreamReader(fs1)
 
             Dim linecounter1 = 0
@@ -102,7 +102,7 @@ Public Class Database
         Try
             'load the Iso data from the isolation.csv file
             'Dim fs As FileStream
-            Dim fs3 = New FileStream("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\isolation.csv", FileMode.Open)
+            Dim fs3 = New FileStream("\_Energy\isolation.csv", FileMode.Open)
             Dim sr3 = New StreamReader(fs3)
 
             Dim linecounter = 0
@@ -141,7 +141,7 @@ Public Class Database
         Try
             'load the material data from the burningmaterial.csv file
             'Dim fs As FileStream
-            Dim fs2 = New FileStream("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\burningmaterial.csv", FileMode.Open)
+            Dim fs2 = New FileStream("\_Energy\burningmaterial.csv", FileMode.Open)
             Dim sr2 = New StreamReader(fs2)
 
             Dim linecounter2 = 0
@@ -166,7 +166,7 @@ Public Class Database
 
     Private Sub Button1_Click(sender As System.Object, e As System.EventArgs) Handles Button1.Click
         '----------------- write new data to material file -------------------------
-        Dim sw As StreamWriter = New StreamWriter("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\material.csv")
+        Dim sw As StreamWriter = New StreamWriter("\_Energy\material.csv")
         For i = 0 To 20
             sw.Write(DG_Material.Rows(i).Cells(0).Value + ";")
             sw.Write(DG_Material.Rows(i).Cells(1).Value)
@@ -174,7 +174,7 @@ Public Class Database
         Next i
         sw.Close()
         '------------------ write new data to screen file ---------------------------
-        Dim sw1 As StreamWriter = New StreamWriter("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\screen.csv")
+        Dim sw1 As StreamWriter = New StreamWriter("\_Energy\screen.csv")
         For i = 0 To 20
             sw1.Write(DG_screen.Rows(i).Cells(0).Value + ";")
             sw1.Write(DG_screen.Rows(i).Cells(1).Value)
@@ -183,7 +183,7 @@ Public Class Database
         sw1.Close()
 
         '------------------ write new data to burning material file ---------------------------
-        Dim sw2 As StreamWriter = New StreamWriter("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\burningmaterial.csv")
+        Dim sw2 As StreamWriter = New StreamWriter("\_Energy\burningmaterial.csv")
         For i = 0 To 9
             sw2.Write(DG_burningmaterial.Rows(i).Cells(0).Value + ";")
             sw2.Write(DG_burningmaterial.Rows(i).Cells(1).Value)
