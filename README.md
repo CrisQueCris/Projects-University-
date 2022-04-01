@@ -21,8 +21,16 @@ Course focus:
 
 ## 2) Analysis for Master's Thesis in Agricultural Economics at Humboldt University Berlin
 
-Title: 	Does Sustainable Intensification Protect Forests from Deforestation?
-	The Case of Silvopastoral Systems in Caquetá, Colombia
+	- Title: 	Does Sustainable Intensification Protect Forests from Deforestation?
+			The Case of Silvopastoral Systems in Caquetá, Colombia
+	- Rscripts and HTML without Data
 
+## 3) Greenhouse Calculator 
+
+
+Project goals:
+	- Developing a greenhouse energy calculator in Visual Basics
+	- inputs: temperature data and surface area of greenhouse
+	- outputs: modeled heat consumption
 
   
