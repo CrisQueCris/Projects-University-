@@ -17,6 +17,12 @@ Course focus:
 	- Planing and Development of data bases
 	
 	- Development of Tools for Controling in MS Access
+	
+
+## 2) Analysis for Master's Thesis in Agricultural Economics at Humboldt University Berlin
+
+Title: 	Does Sustainable Intensification Protect Forests from Deforestation?
+	The Case of Silvopastoral Systems in Caquetá, Colombia
 
 
   
