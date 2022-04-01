@@ -17,3 +17,6 @@ C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\Greenhouse_cal
 C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\Greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\en\greenhouse_calculator.resources.dll
 C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\Greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\greenhouse_calculator.A_Form.en.resources
 C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\Greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\greenhouse_calculator.Database.en.resources
+C:\Users\Lenovo\Source\Repos\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\greenhouse_calculator.exe
+C:\Users\Lenovo\Source\Repos\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\greenhouse_calculator.xml
+C:\Users\Lenovo\Source\Repos\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\greenhouse_calculator\obj\x86\Debug\greenhouse_calculator.pdb
