@@ -64,7 +64,7 @@ Public Class HeatConsumtion
             t_sum = 0
             'Double.Parse(t_sum, CultureInfo.InvariantCulture)
             t_number = 0
-            pathname = "C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\greenhouse_calculator\_Energy\climate\outside temperature\" + (i + 9498).ToString
+            pathname = "C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\climate\outside temperature" + (i + 9498).ToString
             DG_consumption(0, i).Value = FileDateTime(pathname)
 
             Dim sr As StreamReader = New StreamReader(pathname)
@@ -206,7 +206,7 @@ Public Class HeatConsumtion
     End Sub
 
     Private Sub B_Saveprices_Click(sender As System.Object, e As System.EventArgs) Handles B_Saveprices.Click
-        Dim sw As StreamWriter = New StreamWriter("C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\greenhouse_calculator\_Energy\prices.inf")
+        Dim sw As StreamWriter = New StreamWriter("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\prices.inf")
 
         'save prices
         sw.WriteLine(TB_Oilprice.Text)
@@ -217,7 +217,7 @@ Public Class HeatConsumtion
     End Sub
 
     Private Sub Button1_Click_1(sender As System.Object, e As System.EventArgs) Handles B_loadprices.Click
-        Dim sw As StreamReader = New StreamReader("C:\Users\Christoph\Droapbox\Dropbox\Studium\Master\Semester 3\IKT\greenhouse_calculator\_Energy\prices.inf", FileMode.Open)
+        Dim sw As StreamReader = New StreamReader("C:\Users\Lenovo\Documents\GitHub\Projects-University-\Greenhouse Energy Calculator\greenhouse_calculator\_Energy\prices.inf", FileMode.Open)
 
 
         'read geometry
