@@ -29,8 +29,11 @@ Course focus:
 
 
 Project goals:
+
 	- Developing a greenhouse energy calculator in Visual Basics
+	
 	- inputs: temperature data and surface area of greenhouse
+	
 	- outputs: modeled heat consumption
 
   
